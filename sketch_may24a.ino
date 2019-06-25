@@ -14,9 +14,6 @@ Ultrasonic ultrasonic_sensor(pino_trigger, pino_echo);
 // isso é um tipo char. Isso garante que o código sempre funcione
 uint8_t comando; 
 
-
-// isso é um tipo char. Isso garante que o código sempre funcione
-uint8_t comandoManual; 
 void setup() {
  Serial.begin(9600);
  Serial.println("Teste sensor ultrassom");
@@ -26,7 +23,6 @@ void setup() {
  pinMode(motor2_b, OUTPUT);
  randomSeed(analogRead(0));
  comando = 's';
- comandoManual = 's';
 }
 
 void loop() {
@@ -44,26 +40,28 @@ void loop() {
  delay(5000);
 
   if(Serial.available()){
-   comando =  Serial.read();  
-   comandoManual = comando;
+   comando =  Serial.read(); 
   }
  
 
 
-if(comandoManual == 's'){
+
+ //letra 'f' recebido pelo Bluetooth  faz o carinho andar para frente
   if(comando == 'f'){
   forward();
   }else if(comando == 'a'){
+    //letra 'a' recebido pelo Bluetooth  faz o carinho andar para trás
     backward();
   }else if(comando == 'p'){
+      //letra 'p' recebido pelo Bluetooth  faz o carinho parar
      break1;
   }else if(comando == 'r'){
+      //letra 'r' recebido pelo Bluetooth  faz o carinho ir para direita
      rigth();
   }else if(comando == 'l'){
+    //letra 'l' recebido pelo Bluetooth  faz o carinho ir para esquerda
    left();
-  }else
-       break1;
-  }else{
+  } else{
     forward();
   if(cmMsec <15 && cmMsec != 0){
     break1;
